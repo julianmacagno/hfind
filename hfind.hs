@@ -5,8 +5,6 @@ import Options.Applicative
 import Data.Semigroup ((<>))
 import System.FilePath.Find
 import System.Process
---import System.FilePath.Glob
---import System.FilePath.Manip
 import qualified Data.List as DL
 
 data Search = FileName { fname :: String, path :: String, exec :: String } 
@@ -76,4 +74,3 @@ search (FileType filetype path command) = do
     if command == ""
     then mapM_ print files
     else mapM_ callCommand (map (command++) files)
---search _ = return ()
