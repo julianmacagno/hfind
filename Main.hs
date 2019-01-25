@@ -69,7 +69,7 @@ search (FileName filename path command) = do
         then do 
             putStrLn ("Search by filename " ++ filename ++ " in " ++ path)
             mapM_ print filteredFiles
-        else mapM_ callCommand (map (command++) (map (strReplace " " "\\ ") filteredFiles))
+        else mapM_ ((callCommand . (command ++)) . strReplace " " "\\ ") filteredFiles
     else putStrLn $ "Not files found with filename " ++ filename ++ " in " ++ path
 search (FileType filetype path command) = do
     files <- find always (fileType ==? RegularFile &&? extension ==? filetype) path
@@ -79,5 +79,6 @@ search (FileType filetype path command) = do
         then do
             putStrLn ("Search by filetype " ++ filetype ++ " in " ++ path)
             mapM_ print files
-            else mapM_ callCommand (map (command++) (map (strReplace " " "\\ ") files))
+            else mapM_ ((callCommand . (command ++)) . strReplace " " "\\ ") files
+        
     else putStrLn $ "Not files found with filetype " ++ filetype ++ " in " ++ path

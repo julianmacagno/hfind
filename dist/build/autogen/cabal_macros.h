@@ -28,12 +28,12 @@
   (major1) == 0 && (major2) <  14 || \
   (major1) == 0 && (major2) == 14 && (minor) <= 3)
 
-/* package process-1.4.2.0 */
-#define VERSION_process "1.4.2.0"
+/* package process-1.6.5.0 */
+#define VERSION_process "1.6.5.0"
 #define MIN_VERSION_process(major1,major2,minor) (\
   (major1) <  1 || \
-  (major1) == 1 && (major2) <  4 || \
-  (major1) == 1 && (major2) == 4 && (minor) <= 2)
+  (major1) == 1 && (major2) <  6 || \
+  (major1) == 1 && (major2) == 6 && (minor) <= 5)
 
 /* package strings-1.1 */
 #define VERSION_strings "1.1"
@@ -41,6 +41,13 @@
   (major1) <  1 || \
   (major1) == 1 && (major2) <  1 || \
   (major1) == 1 && (major2) == 1 && (minor) <= 0)
+
+/* tool cpphs-1.20.8 */
+#define TOOL_VERSION_cpphs "1.20.8"
+#define MIN_TOOL_VERSION_cpphs(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  20 || \
+  (major1) == 1 && (major2) == 20 && (minor) <= 8)
 
 /* tool gcc-6.3.0 */
 #define TOOL_VERSION_gcc "6.3.0"
@@ -70,6 +77,13 @@
   (major1) == 2 && (major2) <  17 || \
   (major1) == 2 && (major2) == 17 && (minor) <= 2)
 
+/* tool happy-1.19.9 */
+#define TOOL_VERSION_happy "1.19.9"
+#define MIN_TOOL_VERSION_happy(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  19 || \
+  (major1) == 1 && (major2) == 19 && (minor) <= 9)
+
 /* tool hpc-0.67 */
 #define TOOL_VERSION_hpc "0.67"
 #define MIN_TOOL_VERSION_hpc(major1,major2,minor) (\
@@ -83,6 +97,13 @@
   (major1) <  0 || \
   (major1) == 0 && (major2) <  68 || \
   (major1) == 0 && (major2) == 68 && (minor) <= 0)
+
+/* tool hscolour-1.24 */
+#define TOOL_VERSION_hscolour "1.24"
+#define MIN_TOOL_VERSION_hscolour(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  24 || \
+  (major1) == 1 && (major2) == 24 && (minor) <= 0)
 
 /* tool pkg-config-0.29 */
 #define TOOL_VERSION_pkg_config "0.29"
