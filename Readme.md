@@ -43,3 +43,12 @@ Where the available options are:
   `-h,--help`     Show the help text
 
   `--exec`        Command to be excecuted at search result - This argument is optional
+
+### Authors:
+- Julián Ignacio Macagno. Oncativo, Cordoba, Argentina. 
+  julian.macagno55@gmail.com
+
+### External dependencies: 
+- optparse-applicative. Paolo Capriotti & Huw Campbell.
+- filemanip. Braian O' Sullivan.
+- strings. Julian Fleischer.
