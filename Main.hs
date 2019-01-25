@@ -5,7 +5,8 @@ import Options.Applicative
 import Data.Semigroup ((<>))
 import System.FilePath.Find
 import System.Process
-import qualified Data.List as DL
+import Data.List (isInfixOf)
+import Data.Strings (strReplace)
 
 data Search = FileName { fname :: String, path :: String, exec :: String } 
             | FileType { ftype :: String, path :: String, exec :: String }
@@ -24,7 +25,6 @@ searchByFilename = FileName
        <> help "path where to search for" )
       <*> option str
         ( long "exec"
-       <> short 'e'
        <> value ""
        <> metavar "exec"
        <> help "command to be excecuted at search result")
@@ -43,7 +43,6 @@ searchByFiletype = FileType
         <> help "path where to search for" )
        <*> option str
          ( long "exec"
-        <> short 'e'
         <> value ""
         <> metavar "exec"
         <> help "command to be excecuted at search result")
@@ -62,15 +61,23 @@ opts = info (searcher <**> helper)
 
 search :: Search -> IO ()
 search (FileName filename path command) = do 
-    putStrLn $ "Buscar por nombre de archivo " ++ filename ++ " en " ++ path
     files <- find always (fileType ==? RegularFile) path
-    let filteredFiles = filter (DL.isInfixOf filename) files
-    if command == ""
-    then mapM_ print filteredFiles
-    else mapM_ callCommand (map (command++) filteredFiles)
+    let filteredFiles = filter (isInfixOf filename) files
+    if filteredFiles /= []
+    then 
+        if command == ""
+        then do 
+            putStrLn ("Search by filename " ++ filename ++ " in " ++ path)
+            mapM_ print filteredFiles
+        else mapM_ callCommand (map (command++) (map (strReplace " " "\\ ") filteredFiles))
+    else putStrLn $ "Not files found with filename " ++ filename ++ " in " ++ path
 search (FileType filetype path command) = do
-    putStrLn $ "Buscar por tipo de archivo " ++ filetype ++ " en " ++ path
     files <- find always (fileType ==? RegularFile &&? extension ==? filetype) path
-    if command == ""
-    then mapM_ print files
-    else mapM_ callCommand (map (command++) files)
+    if files /= []
+        then
+        if command == ""
+        then do
+            putStrLn ("Search by filetype " ++ filetype ++ " in " ++ path)
+            mapM_ print files
+            else mapM_ callCommand (map (command++) (map (strReplace " " "\\ ") files))
+    else putStrLn $ "Not files found with filetype " ++ filetype ++ " in " ++ path
