@@ -52,3 +52,11 @@ Where the available options are:
 - optparse-applicative. Paolo Capriotti & Huw Campbell.
 - filemanip. Braian O' Sullivan.
 - strings. Julian Fleischer.
+
+**Tested successfully on ghc 8.0.1 and cabal 1.24.0.1**
+**Dependencies where:**
+- **base 4.9**
+- **optparse-applicative 0.14.3.0**
+- **filemanip 0.3.6.3**
+- **process 1.6.5.0**
+- **strings 1.1**
