@@ -24,11 +24,11 @@ To install this tool just download the sources files from https://github.com/jul
 
 For running hfind just do
 
-`hfind (-n|--fname) (-p|--path) [--exec]`
+`hfind (-n|--fname) [-p|--path] [--exec]`
 
 or
 
-`hfind (-t|--ftype) (-p|--path) [--exec]`
+`hfind (-t|--ftype) [-p|--path] [--exec]`
 
 Where the available options are:
 
@@ -36,25 +36,21 @@ Where the available options are:
 
   `-t,--ftype`    Filetype to search for
 
-  `-p,--path`     Path where to search for
+  `-p,--path`     Path where to search for - Optional
+
+  `--exec`        Command to be excecuted at search result - Optional
 
   `-h,--help`     Show the help text
-
-  `--exec`        Command to be excecuted at search result - This argument is optional
 
 ### Authors:
 - Julián Ignacio Macagno. Oncativo, Cordoba, Argentina. 
   julian.macagno55@gmail.com
 
-### External dependencies: 
-- optparse-applicative. Paolo Capriotti & Huw Campbell.
-- filemanip. Braian O' Sullivan.
-- strings. Julian Fleischer.
-
 **Tested successfully on ghc 8.0.1 and cabal 1.24.0.1**
-**Dependencies where:**
-- **base 4.9**
-- **optparse-applicative 0.14.3.0**
-- **filemanip 0.3.6.3**
-- **process 1.6.5.0**
-- **strings 1.1**
+
+### Dependencies are: 
+- **base 4.9** - Haskell standard libraries
+- **process 1.6.5.0** - Haskell standard libraries
+- **optparse-applicative 0.14.3.0** - Paolo Capriotti & Huw Campbell.
+- **filemanip 0.3.6.3** - Braian O' Sullivan.
+- **strings 1.1** - Julian Fleischer.
