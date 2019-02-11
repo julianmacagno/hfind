@@ -18,9 +18,10 @@ searchByFilename = FileName
        <> short 'n'
        <> metavar "filename"
        <> help "filename to search for" )
-      <*> strOption
+      <*> option str
         ( long "path"
        <> short 'p'
+       <> value "."
        <> metavar "path"
        <> help "path where to search for" )
       <*> option str
@@ -36,9 +37,10 @@ searchByFiletype = FileType
         <> short 't'
         <> metavar "filetype"
         <> help "filetype to search for" )
-       <*> strOption
+       <*> option str
          ( long "path"
         <> short 'p'
+        <> value "."
         <> metavar "path"
         <> help "path where to search for" )
        <*> option str
