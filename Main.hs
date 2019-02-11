@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 module Main where
 
 import Options.Applicative
@@ -7,6 +6,7 @@ import System.FilePath.Find
 import System.Process
 import Data.List (isInfixOf)
 import Data.Strings (strReplace)
+import Control.Monad (liftM)
 
 data Search = FileName { fname :: String, path :: String, exec :: String } 
             | FileType { ftype :: String, path :: String, exec :: String }
@@ -49,11 +49,11 @@ searchByFiletype = FileType
         <> metavar "exec"
         <> help "command to be excecuted at search result")
 
-searcher :: Parser Search
-searcher = searchByFiletype <|> searchByFilename
-
 main :: IO ()
 main = search =<< execParser opts
+
+searcher :: Parser Search
+searcher = searchByFiletype <|> searchByFilename
 
 opts :: ParserInfo Search
 opts = info (searcher <**> helper)
@@ -63,8 +63,9 @@ opts = info (searcher <**> helper)
 
 search :: Search -> IO ()
 search (FileName filename path command) = do 
-    files <- find always (fileType ==? RegularFile) path
-    let filteredFiles = filter (isInfixOf filename) files
+    -- files <- find always (fileType ==? RegularFile) path
+    -- let filteredFiles = filter (isInfixOf filename) files
+    filteredFiles <- find always (fileType ==? RegularFile &&? isInfixOf filename `liftM` fileName) path
     if filteredFiles /= []
     then 
         if command == ""
@@ -94,7 +95,7 @@ checkExtension filetype
     | head filetype /= '.' = "." ++ filetype
     | otherwise = filetype
 
-checkCommand :: String -> [Char]
+checkCommand :: String -> String
 checkCommand command 
     | last command /= ' ' = command ++ " "
     | otherwise = command
