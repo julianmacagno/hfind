@@ -57,7 +57,7 @@ opts :: ParserInfo Search
 opts = info (searcher <**> helper)
   ( fullDesc
   <> progDesc "Search files on the given path and filter them by filename or filetype"
-  <> header "fname - a test for optparse-applicative" )
+  <> header "hfind - a GNU-find based utility" )
 
 search :: Search -> IO ()
 search (FileName filename path command) = do 
@@ -69,16 +69,30 @@ search (FileName filename path command) = do
         then do 
             putStrLn ("Search by filename " ++ filename ++ " in " ++ path)
             mapM_ print filteredFiles
-        else mapM_ ((callCommand . (command ++)) . strReplace " " "\\ ") filteredFiles
+        else do
+            let checkedCommand = checkCommand command
+            mapM_ ((callCommand . (checkedCommand ++)) . strReplace " " "\\ ") filteredFiles
     else putStrLn $ "Not files found with filename " ++ filename ++ " in " ++ path
 search (FileType filetype path command) = do
-    files <- find always (fileType ==? RegularFile &&? extension ==? filetype) path
+    let checkedExtension = checkExtension filetype
+    files <- find always (fileType ==? RegularFile &&? extension ==? checkedExtension) path
     if files /= []
-        then
+    then
         if command == ""
         then do
             putStrLn ("Search by filetype " ++ filetype ++ " in " ++ path)
             mapM_ print files
-            else mapM_ ((callCommand . (command ++)) . strReplace " " "\\ ") files
-        
+        else do
+            let checkedCommand = checkCommand command
+            mapM_ ((callCommand . (checkedCommand ++)) . strReplace " " "\\ ") files
     else putStrLn $ "Not files found with filetype " ++ filetype ++ " in " ++ path
+
+checkExtension :: String -> String
+checkExtension filetype
+    | head filetype /= '.' = "." ++ filetype
+    | otherwise = filetype
+
+checkCommand :: String -> [Char]
+checkCommand command 
+    | last command /= ' ' = command ++ " "
+    | otherwise = command

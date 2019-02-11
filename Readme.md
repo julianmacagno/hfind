@@ -13,14 +13,12 @@ This utility allows user to execute a shell command which takes a filaname path 
 To install this tool just download the sources files from https://github.com/julianmacagno/hfind and compile them using
 
 `cabal update`
+
+`cabal install`
+
 `cabal configure`
+
 `cabal build`
-
-Maybe you will have some dependencies issues. To fix it, install them with
-
-`cabal install optparse-applicative filemanip process strings`
-
-And install too all other missing dependencies you need for unknow reasons.
 
 ### Runing hfind
 
